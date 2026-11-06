@@ -391,7 +391,6 @@ export default function BillsPanel({
   onBillAdded,
   onSharePaid,
 }: BillsPanelProps) {
-  console.log(bills)
 
   return (
     <div className="flex flex-col gap-4">
