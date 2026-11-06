@@ -1,6 +1,7 @@
 # SDE Intern Assignment: Shared Bill Splitter
 
 ## Decisions
+
 1. Added **"position"**: As there are requirements that the extra cents will be added to the memebrs those were created first, i have created the memebrs with an increamental position field and when I create the share the , I select the members ORDER BY the position and split the bill.
 
 2. Made `POST /api/homes/:homeId/bills` route **Atomic**: I have designed the API in a way that, when two requests reach simultanously the first request sets the `paid_at` and `payment_key` fields and when the second requuest comes up with the same `shareId` instead of updating the row, it returns status `200` and the same row and same payload if the payment fails and with diifrent key it returns `409`, and also I have implmented batch queries , when one payment fails others do not fail.

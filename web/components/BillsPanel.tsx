@@ -82,7 +82,6 @@ const billSchema = z.object({
 
 type BillFormValues = z.infer<typeof billSchema>
 
-
 // ─── Collapsible Bill Card ────────────────────────────────────────────────────
 
 function BillCard({ bill, onSharePaid }: { bill: BillItem; onSharePaid?: () => void }) {
@@ -145,9 +144,7 @@ function BillCard({ bill, onSharePaid }: { bill: BillItem; onSharePaid?: () => v
         </div>
 
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className="font-semibold text-sm text-foreground">
-            {bill.totalCents}
-          </span>
+          <span className="font-semibold text-sm text-foreground">{bill.totalCents}</span>
           <ChevronDown
             className={cn(
               'size-4 text-muted-foreground transition-transform duration-200',
@@ -176,9 +173,7 @@ function BillCard({ bill, onSharePaid }: { bill: BillItem; onSharePaid?: () => v
                       <span className="text-xs font-medium text-foreground truncate">
                         {share.memberName}
                       </span>
-                      <span className="text-xs text-muted-foreground">
-                        {share.amountCents}
-                      </span>
+                      <span className="text-xs text-muted-foreground">{share.amountCents}</span>
                     </div>
 
                     {share.paidAt !== null ? (
@@ -259,14 +254,13 @@ function AddBillDialog({
     setServerError('')
     setSubmitting(true)
 
-
     try {
       const res = await fetch(`/api/homes/${homeId}/bills`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: values.title, totalCents: Number(values.amount) }),
       })
-      
+
       if (!res.ok) {
         const data: unknown = await res.json().catch(() => null)
         const msg =
@@ -397,8 +391,8 @@ export default function BillsPanel({
   onBillAdded,
   onSharePaid,
 }: BillsPanelProps) {
-  console.log(bills);
-  
+  console.log(bills)
+
   return (
     <div className="flex flex-col gap-4">
       {/* Header */}
