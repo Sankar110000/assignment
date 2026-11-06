@@ -82,11 +82,6 @@ const billSchema = z.object({
 
 type BillFormValues = z.infer<typeof billSchema>
 
-// ─── Format helpers ───────────────────────────────────────────────────────────
-
-function formatCents(cents: number): string {
-  return `₹${(cents / 100).toFixed(2)}`
-}
 
 // ─── Collapsible Bill Card ────────────────────────────────────────────────────
 
@@ -151,7 +146,7 @@ function BillCard({ bill, onSharePaid }: { bill: BillItem; onSharePaid?: () => v
 
         <div className="flex items-center gap-2 shrink-0 ml-2">
           <span className="font-semibold text-sm text-foreground">
-            {formatCents(bill.totalCents)}
+            {bill.totalCents}
           </span>
           <ChevronDown
             className={cn(
@@ -182,7 +177,7 @@ function BillCard({ bill, onSharePaid }: { bill: BillItem; onSharePaid?: () => v
                         {share.memberName}
                       </span>
                       <span className="text-xs text-muted-foreground">
-                        {formatCents(share.amountCents)}
+                        {share.amountCents}
                       </span>
                     </div>
 
@@ -264,16 +259,14 @@ function AddBillDialog({
     setServerError('')
     setSubmitting(true)
 
-    // Convert dollars/rupees → cents (round to nearest cent)
-    const totalCents = Math.round(Number(values.amount) * 100)
 
     try {
       const res = await fetch(`/api/homes/${homeId}/bills`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: values.title, totalCents }),
+        body: JSON.stringify({ title: values.title, totalCents: Number(values.amount) }),
       })
-
+      
       if (!res.ok) {
         const data: unknown = await res.json().catch(() => null)
         const msg =
@@ -404,6 +397,8 @@ export default function BillsPanel({
   onBillAdded,
   onSharePaid,
 }: BillsPanelProps) {
+  console.log(bills);
+  
   return (
     <div className="flex flex-col gap-4">
       {/* Header */}

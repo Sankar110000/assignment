@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod'
+  import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, PlusCircle, Users } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -51,12 +51,6 @@ const memberSchema = z.object({
 
 type MemberFormValues = z.infer<typeof memberSchema>
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function formatCents(cents: number): string {
-  return `₹${(cents / 100).toFixed(2)}`
-}
-
 // ─── Outstanding badge ────────────────────────────────────────────────────────
 
 function OutstandingBadge({ cents }: { cents: number }) {
@@ -69,7 +63,7 @@ function OutstandingBadge({ cents }: { cents: number }) {
   }
   return (
     <span className="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-600/20">
-      Owes {formatCents(cents)}
+      Owes {cents}
     </span>
   )
 }
